@@ -111,6 +111,17 @@ class AccessKey():
             raise AccessManagementException("key is not found or is expired")
         return True
 
+    @classmethod
+    def create_access_door(cls, key):
+        """Class method from creating an instance of AccessKey
+        from the content of a file according to RF2"""
+        keys_store = KeysJsonStore()
+        key_object = keys_store.find_item(Key(key).value)
+        if key_object is None:
+            raise AccessManagementException("key is not found or is expired")
+        return cls(key_object[keys_store.DNI],
+                   key_object[keys_store.ACCESS_CODE],
+                   key_object[keys_store.MAIL_LIST])
 
     @classmethod
     def create_key_from_file( cls, key_file ):

@@ -53,14 +53,14 @@ class TestAccessManager(unittest.TestCase):
         """path: regex ok , key is found , key is not expired, guest"""
         my_key = AccessManager()
         result = my_key.open_door\
-            ("c86ce296c4a570c9469893ee47040649935a706fbd86ddcb2dd84f913edace52")
+            ("de000a04f3a9b1d15b07e38b166f00f3fb1bf46533f32ac37156faf43e47f722")
         self.assertEqual(True, result)
 
     def test_open_door_resident(self):
         """path: regex ok, key is found, expiration date is 0, resident"""
         my_key = AccessManager()
         result = my_key.open_door\
-            ("c86ce296c4a570c9469893ee47040649935a706fbd86ddcb2dd84f913edace52")
+            ("de000a04f3a9b1d15b07e38b166f00f3fb1bf46533f32ac37156faf43e47f722")
         self.assertEqual(True, result)
 
     def test_open_door_bad_key_is_not_found(self):
