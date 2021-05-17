@@ -1,7 +1,7 @@
 VALID INVALID;ID TEST;FILE;EXPECTED RESULT
-VALID;RF2 1;key_ok.json;657244bdf89f067462e6a7f12b44749340f61030619f93bee391fbaf93361627
-VALID;RF2 2;key_ok2.json;459063166d5a8e38ac493d4f523e31cca39bdc2c523d12dc08cae4a983224495
-VALID;RF2 3;key_ok3_resident.json;de000a04f3a9b1d15b07e38b166f00f3fb1bf46533f32ac37156faf43e47f722
+VALID;RF2 1;key_ok.json;c86ce296c4a570c9469893ee47040649935a706fbd86ddcb2dd84f913edace52
+VALID;RF2 2;key_ok2.json;7bd9492a4e3a6e21496d989cae8c94f49e9e7f3eaee31434c5a66db185c6ba6a
+VALID;RF2 3;key_ok3_resident.json;555ef4c47e24ef06ed45f773799fa5cc0c5ceb36f674d519760e29456aa53d21
 INVALID;RF2 4;bad_dni_character_invalid.json;DNI is not valid
 INVALID;RF2 5;bad_dni_numeric_character.json;DNI is not valid
 INVALID;RF2 6;bad_email_at_character.json;Email invalid

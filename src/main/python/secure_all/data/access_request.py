@@ -20,6 +20,7 @@ class AccessRequest:
         self.__visitor_type = access_type_object.value
         self.__email_address = Email(email_address).value
         self.__validity = access_type_object.validate_days(validity)
+        self.__access_code = hashlib.md5(self.__str__().encode()).hexdigest()
         access_type_object = None
         #justnow = datetime.utcnow()
         #self.__time_stamp = datetime.timestamp(justnow)
@@ -83,23 +84,25 @@ class AccessRequest:
     @property
     def access_code (self):
         """Property for obtaining the access code according the requirements"""
-        return hashlib.md5(self.__str__().encode()).hexdigest()
+        return self.__access_code
 
     @classmethod
     def create_request_from_code( cls, access_code, dni ):
         """Load from the store an AccessRequest from the access_code
         and the dni"""
         request_store = RequestJsonStore()
-        request_stored = request_store.find_item(dni)
+        #Cambiamos a la hora de buscar en un json por el access code
+        request_stored = request_store.find_item(access_code)
         if request_stored is None:
             raise AccessManagementException(request_store.NOT_FOUND_IN_THE_STORE)
 
-        request_stored_object = cls(request_stored[ request_store.ID_FIELD ],
+        request_stored_object = cls(request_stored[ request_store.REQUEST__DNI ],
                                         request_stored[ request_store.REQUEST__NAME ],
                                         request_stored[ request_store.REQUEST__VISITOR_TYPE ],
                                         request_stored[ request_store.REQUEST__EMAIL_ADDRESS ],
                                         request_stored[ request_store.ACCESS_REQUEST__VALIDITY ])
 
-        if not request_stored_object.access_code == access_code:
+        #comprobamos que el access code pertenezca al dni establecido
+        if not request_stored_object.__id_document == dni:
             raise AccessManagementException(request_store.NOT_CORRECT_FOR_THIS_DNI)
         return request_stored_object
