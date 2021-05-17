@@ -29,7 +29,7 @@ class KeysJsonStore():
             if not self.find_item(item.key) is None:
                 raise AccessManagementException(self.KEY_ALREADY_STORED)
 
-            return super().add_item(item)
+            return super().add_item(item.__dict__)
 
     __instance = None
 

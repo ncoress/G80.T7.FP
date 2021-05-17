@@ -37,7 +37,7 @@ class RequestJsonStore():
             if not self.find_item(item.id_document) is None:
                 raise AccessManagementException(self.ID_DOCUMENT_ALREADY_STORED)
 
-            return super().add_item(item)
+            return super().add_item(item.__dict__)
 
 
     __instance = None

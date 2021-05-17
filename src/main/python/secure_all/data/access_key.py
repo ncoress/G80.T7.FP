@@ -8,7 +8,7 @@ from secure_all.data.attributes.attribute_access_code import AccessCode
 from secure_all.data.attributes.attribute_dni import Dni
 from secure_all.data.attributes.attribute_email_list import EmailList
 from secure_all.data.attributes.attribute_key import Key
-from secure_all.storage.open_door_store import OpenDoorStore
+
 from secure_all.storage.keys_json_store import KeysJsonStore
 from secure_all.parser.key_json_parser import KeyJsonParser
 
@@ -30,7 +30,7 @@ class AccessKey():
         access_request = AccessRequest.create_request_from_code(self.__access_code, self.__dni)
         self.__notification_emails = EmailList(notification_emails).value
         validity = access_request.validity
-        justnow = datetime.utcnow()
+        #justnow = datetime.utcnow()
         #self.__issued_at = datetime.timestamp(justnow)
         # fix self.__issued_at only for testing 13-3-2021 18_49
         self.__issued_at=1615627129.580297
@@ -41,7 +41,7 @@ class AccessKey():
             #validity must be expressed in senconds to be added to the timestap
             self.__expiration_date = self.__issued_at + (validity * 30 * 24 * 60 *60)
         self.__key = hashlib.sha256(self.__signature_string().encode()).hexdigest()
-        self.__accessDate = datetime.timestamp(justnow)
+
 
     def __signature_string(self):
         """Composes the string to be used for generating the key"""
@@ -111,12 +111,6 @@ class AccessKey():
             raise AccessManagementException("key is not found or is expired")
         return True
 
-    @classmethod
-    def store_access_door(self):
-        """Class method from creating an instance of AccessKey
-        from the content of a file according to RF2"""
-        od_store = OpenDoorStore()
-        od_store.add_item(self)
 
     @classmethod
     def create_key_from_file( cls, key_file ):
