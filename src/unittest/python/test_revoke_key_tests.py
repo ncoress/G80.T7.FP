@@ -3,7 +3,8 @@ from secure_all.access_manager import AccessManager
 from secure_all import JSON_FILES_PATH
 from secure_all.storage.revokeKeys_json_store import RevokeKeysStore
 
-class MyTestCase(unittest.TestCase):
+
+class TestRevokeKeys(unittest.TestCase):
     rev_store = RevokeKeysStore()
     rev_store.empty_store()
     def test_rev_ok(self):

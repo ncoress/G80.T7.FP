@@ -32,7 +32,8 @@ class AccessManager:
         def revoked_key(file):
             """Guarda la llave y devuelve los emails de la clave revocada"""
             my_key = AccessKey.revoke_key(file)
-            return AccessKey.create_key_from_id(my_key).notification_emails
+            if AccessKey.create_key_from_id(my_key).is_valid():
+                return AccessKey.create_key_from_id(my_key).notification_emails
 
     __instance = None
 
