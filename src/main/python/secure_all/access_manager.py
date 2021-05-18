@@ -24,7 +24,15 @@ class AccessManager:
 
         def open_door( self, key ):
             """Opens the door if the key is valid an it is not expired"""
-            return AccessKey.create_key_from_id(key).is_valid()
+            if AccessKey.create_key_from_id(key).is_valid():
+                AccessKey.store_open_door(key)
+                return True
+
+        @staticmethod
+        def revoked_key(my_file):
+            """Guarda la llave y devuelve los emails de la clave revocada"""
+            AccessKey.revoke_key(my_file)
+            return AccessKey.revoke_key(my_file)
 
     __instance = None
 

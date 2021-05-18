@@ -8,9 +8,13 @@ from secure_all.data.attributes.attribute_access_code import AccessCode
 from secure_all.data.attributes.attribute_dni import Dni
 from secure_all.data.attributes.attribute_email_list import EmailList
 from secure_all.data.attributes.attribute_key import Key
+from secure_all.data.attributes.attribute_revocation import Revocation
+from secure_all.data.attributes.attribute_reason import Reason
 from secure_all.storage.openD_json_store import OpenDoorStore
 from secure_all.storage.keys_json_store import KeysJsonStore
 from secure_all.parser.key_json_parser import KeyJsonParser
+from secure_all.storage.revokeKeys_json_store import RevokeKeysStore
+from secure_all.parser.revoke_key_json_parser import RevokeKeyJsonParser
 
 
 
@@ -109,12 +113,15 @@ class AccessKey():
         if not (self.__expiration_date == 0 or
                 self.__expiration_date > justnow_timestamp):
             raise AccessManagementException("key is not found or is expired")
-        item = {"Key": self.key,
+
+        return True
+    @staticmethod
+    def store_open_door(key):
+        justnow = datetime.utcnow()
+        item = {"Key": key,
                 "AccessDate": datetime.timestamp(justnow)}
         od_store = OpenDoorStore()
         od_store.add_item(item)
-        return True
-
 
     @classmethod
     def create_key_from_file( cls, key_file ):
@@ -136,3 +143,22 @@ class AccessKey():
         return cls(key_object[keys_store.DNI],
                    key_object[keys_store.ACCESS_CODE],
                    key_object[keys_store.MAIL_LIST])
+
+    def revoke_key (self, file):
+        """Metodo que devuelve la lista de mails de una clave revocada"""
+        revoke_key_items = RevokeKeyJsonParser(file).json_content
+        self.create_key_from_file(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).is_valid()
+
+        item = {"Key": revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY],
+                "Revocation": Revocation(revoke_key_items[RevokeKeyJsonParser.REVOCATION]).value,
+                "Reason": Reason(revoke_key_items[RevokeKeyJsonParser.REASON])}
+        rev_store = RevokeKeysStore()
+        rev_object = rev_store.find_item(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY])
+        if rev_object is None:
+            raise AccessManagementException("Key is revoked")
+        rev_store.add_item(item)
+        return self.create_key_from_file(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).notification_emails
+
+
+
+
