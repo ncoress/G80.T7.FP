@@ -8,7 +8,7 @@ from secure_all.data.attributes.attribute_access_code import AccessCode
 from secure_all.data.attributes.attribute_dni import Dni
 from secure_all.data.attributes.attribute_email_list import EmailList
 from secure_all.data.attributes.attribute_key import Key
-
+from secure_all.storage.openD_json_store import OpenDoorStore
 from secure_all.storage.keys_json_store import KeysJsonStore
 from secure_all.parser.key_json_parser import KeyJsonParser
 
@@ -109,6 +109,10 @@ class AccessKey():
         if not (self.__expiration_date == 0 or
                 self.__expiration_date > justnow_timestamp):
             raise AccessManagementException("key is not found or is expired")
+        item = {"Key": self.key,
+                "AccessDate": datetime.timestamp(justnow)}
+        od_store = OpenDoorStore()
+        od_store.add_item(item)
         return True
 
 
