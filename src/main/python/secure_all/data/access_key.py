@@ -115,6 +115,7 @@ class AccessKey():
             raise AccessManagementException("key is not found or is expired")
 
         return True
+
     @staticmethod
     def store_open_door(key):
         justnow = datetime.utcnow()
@@ -144,12 +145,11 @@ class AccessKey():
                    key_object[keys_store.ACCESS_CODE],
                    key_object[keys_store.MAIL_LIST])
 
-    def revoke_key (self, file):
+    @staticmethod
+    def revoke_key(rev_file):
         """Metodo que devuelve la lista de mails de una clave revocada"""
-        revoke_key_items = RevokeKeyJsonParser(file).json_content
-        self.create_key_from_file(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).is_valid()
-
-        item = {"Key": revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY],
+        revoke_key_items = RevokeKeyJsonParser(rev_file).json_content
+        item = {"Key": Key(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).value,
                 "Revocation": Revocation(revoke_key_items[RevokeKeyJsonParser.REVOCATION]).value,
                 "Reason": Reason(revoke_key_items[RevokeKeyJsonParser.REASON])}
         rev_store = RevokeKeysStore()
@@ -157,7 +157,7 @@ class AccessKey():
         if rev_object is None:
             raise AccessManagementException("Key is revoked")
         rev_store.add_item(item)
-        return self.create_key_from_file(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).notification_emails
+        return Key(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).values
 
 
 

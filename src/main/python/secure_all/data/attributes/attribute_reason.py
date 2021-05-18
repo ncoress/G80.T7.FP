@@ -6,6 +6,6 @@ class Reason(Attribute):
     including the logic for validatin the days"""
 
     def __init__( self,attr_value ):
-        self._validation_pattern =  r'([.]{0,100})'
+        self._validation_pattern =  r'(.{0,100})'
         self._error_message = "type of reason invalid"
         self._attr_value = self._validate(attr_value)

@@ -29,10 +29,10 @@ class AccessManager:
                 return True
 
         @staticmethod
-        def revoked_key(my_file):
+        def revoked_key(file):
             """Guarda la llave y devuelve los emails de la clave revocada"""
-            AccessKey.revoke_key(my_file)
-            return AccessKey.revoke_key(my_file)
+            my_key = AccessKey.revoke_key(file)
+            return AccessKey.create_key_from_id(my_key).notification_emails
 
     __instance = None
 
