@@ -151,13 +151,13 @@ class AccessKey():
         revoke_key_items = RevokeKeyJsonParser(rev_file).json_content
         item = {"Key": Key(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).value,
                 "Revocation": Revocation(revoke_key_items[RevokeKeyJsonParser.REVOCATION]).value,
-                "Reason": Reason(revoke_key_items[RevokeKeyJsonParser.REASON])}
+                "Reason": Reason(revoke_key_items[RevokeKeyJsonParser.REASON]).value}
         rev_store = RevokeKeysStore()
         rev_object = rev_store.find_item(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY])
-        if rev_object is None:
+        if rev_object is not None:
             raise AccessManagementException("Key is revoked")
         rev_store.add_item(item)
-        return Key(revoke_key_items[RevokeKeyJsonParser.ACCESS_KEY]).values
+        return item["Key"]
 
 
 
