@@ -2,7 +2,7 @@
 
 from secure_all.data.access_key import AccessKey
 from secure_all.data.access_request import AccessRequest
-
+from secure_all.exception.access_management_exception import AccessManagementException
 
 class AccessManager:
     """AccessManager class, manages the access to a building implementing singleton """
@@ -22,17 +22,21 @@ class AccessManager:
             my_key.store_keys()
             return my_key.key
 
-        def open_door( self, key ):
+        @staticmethod
+        def open_door( key ):
             """Opens the door if the key is valid an it is not expired"""
-            if AccessKey.create_key_from_id(key).is_valid():
+            if AccessKey.create_key_from_id(key).is_valid() and AccessKey.create_key_from_id(key).is_revoked is False:
                 AccessKey.store_open_door(key)
                 return True
+            else:
+                raise AccessManagementException("key is revoked")
 
         @staticmethod
         def revoked_key(file):
             """Guarda la llave y devuelve los emails de la clave revocada"""
             my_key = AccessKey.revoke_key(file)
-            if AccessKey.create_key_from_id(my_key).is_valid():
+            if AccessKey.create_key_from_id(my_key).is_valid() and AccessKey.create_key_from_id(my_key).is_revoked is False:
+                AccessKey.create_key_from_id(my_key).is_revoked = True
                 return AccessKey.create_key_from_id(my_key).notification_emails
 
     __instance = None

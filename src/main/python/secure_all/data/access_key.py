@@ -45,7 +45,7 @@ class AccessKey():
             #validity must be expressed in senconds to be added to the timestap
             self.__expiration_date = self.__issued_at + (validity * 30 * 24 * 60 *60)
         self.__key = hashlib.sha256(self.__signature_string().encode()).hexdigest()
-
+        self.__is_revoked = False
 
     def __signature_string(self):
         """Composes the string to be used for generating the key"""
@@ -100,6 +100,14 @@ class AccessKey():
     def key(self, value):
         """Setter of the key value"""
         self.__key = value
+
+    @property
+    def is_revoked(self):
+        return self.__is_revoked
+
+    @is_revoked.setter
+    def is_revoked(self, value):
+        self.__is_revoked = value
 
     def store_keys(self):
         """Storing the key in the keys store """
