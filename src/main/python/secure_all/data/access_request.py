@@ -102,6 +102,6 @@ class AccessRequest:
                                         request_stored[ request_store.ACCESS_REQUEST__VALIDITY ])
 
         #comprobamos que el access code pertenezca al dni establecido
-        if not request_stored_object.__id_document == dni:
+        if not request_stored_object.id_document == dni:
             raise AccessManagementException(request_store.NOT_CORRECT_FOR_THIS_DNI)
         return request_stored_object

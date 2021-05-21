@@ -10,10 +10,10 @@ from secure_all.data.attributes.attribute_email_list import EmailList
 from secure_all.data.attributes.attribute_key import Key
 from secure_all.data.attributes.attribute_revocation import Revocation
 from secure_all.data.attributes.attribute_reason import Reason
-from secure_all.storage.openD_json_store import OpenDoorStore
+from secure_all.storage.open_door_json_store import OpenDoorStore
 from secure_all.storage.keys_json_store import KeysJsonStore
 from secure_all.parser.key_json_parser import KeyJsonParser
-from secure_all.storage.revokeKeys_json_store import RevokeKeysStore
+from secure_all.storage.revoke_keys_json_store import RevokeKeysStore
 from secure_all.parser.revoke_key_json_parser import RevokeKeyJsonParser
 
 
@@ -166,7 +166,4 @@ class AccessKey():
             raise AccessManagementException("Key is revoked")
         rev_store.add_item(item)
         return item["Key"]
-
-
-
 
