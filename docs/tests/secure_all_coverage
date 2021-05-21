@@ -1,0 +1,34 @@
+Name                                                   Stmts   Miss Branch BrPart  Cover
+----------------------------------------------------------------------------------------
+\secure_all\__init__.py                                    7      0      0      0   100%
+\secure_all\access_manager.py                             30      1      6      2    92%
+\secure_all\cfg\__init__.py                                0      0      0      0   100%
+\secure_all\cfg\access_manager_config.py                   2      0      0      0   100%
+\secure_all\data\__init__.py                               1      0      0      0   100%
+\secure_all\data\access_key.py                           106      9      8      2    90%
+\secure_all\data\access_request.py                        68     10      4      1    85%
+\secure_all\data\attributes\__init__.py                    0      0      0      0   100%
+\secure_all\data\attributes\attribute.py                  18      2      4      1    86%
+\secure_all\data\attributes\attribute_access_code.py       6      0      0      0   100%
+\secure_all\data\attributes\attribute_access_type.py      17      0      4      0   100%
+\secure_all\data\attributes\attribute_dni.py              15      0      2      0   100%
+\secure_all\data\attributes\attribute_email.py             6      0      0      0   100%
+\secure_all\data\attributes\attribute_email_list.py       14      0      4      0   100%
+\secure_all\data\attributes\attribute_full_name.py         6      0      0      0   100%
+\secure_all\data\attributes\attribute_key.py               6      0      0      0   100%
+\secure_all\data\attributes\attribute_reason.py            6      0      0      0   100%
+\secure_all\data\attributes\attribute_revocation.py        8      0      0      0   100%
+\secure_all\exception\__init__.py                          0      0      0      0   100%
+\secure_all\exception\access_management_exception.py      10      1      0      0    90%
+\secure_all\parser\__init__.py                             0      0      0      0   100%
+\secure_all\parser\json_parser.py                         25      1      6      1    94%
+\secure_all\parser\key_json_parser.py                      6      0      0      0   100%
+\secure_all\parser\revoke_key_json_parser.py               6      0      0      0   100%
+\secure_all\storage\__init__.py                            0      0      0      0   100%
+\secure_all\storage\json_store.py                         35      6      6      0    80%
+\secure_all\storage\keys_json_store.py                    29      4      6      2    83%
+\secure_all\storage\opend_json_store.py                   20      2      2      0    91%
+\secure_all\storage\requests_json_store.py                33      4      6      2    85%
+\secure_all\storage\revokekeys_json_store.py              21      2      2      0    91%
+----------------------------------------------------------------------------------------
+TOTAL                                                    501     42     60     11    90%
